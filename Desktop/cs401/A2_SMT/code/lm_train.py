@@ -3,6 +3,8 @@ import pickle
 import os
 import string
 
+global prev_token
+prev_token = None
 # def compute_unigram_dict(data_str):
 # 	"""
 # 	INPUTS:
@@ -34,27 +36,46 @@ def compute_unigram_dict(sentence, uni_dict, bi_dict):
 	uni_dict	: (dictionary) with words as keys and their unigram count as values
 	"""
 	sentence_tokens = sentence.split()
-
+	global prev_token
 	for token in sentence_tokens: # SPLITS THE DATA INTO WORDS AND PUNCTUATION
+		
+		# __________BUILD UNIGRAM__________
 		if token not in uni_dict:
 			uni_dict[token] = 1
 		else:
 			uni_dict[token] += 1
+
+		#___________BUILD BIGRAM___________
+		if not prev_token: # CHECK IF THIS IS THE FIRST TOKEN ITERATION
+			bi_dict[token] = {}
+			prev_token = token
+			continue
+		if token not in bi_dict[prev_token]: # CHECK IF BIGRAM EXISTS IN DICT ALREADY
+			bi_dict[prev_token][token] = 1 # SET TO 1 IF IT DOES NOT
+		else:
+			bi_dict[prev_token][token] += 1 # ADD 1 IF IT DOES
+
+		if token not in bi_dict:
+			bi_dict[token] = {}
+		prev_token = token
 
 	return uni_dict, bi_dict
 
 def bi_gram():
 	prev_token = None
 	for token in sentence_tokens:
-		if not prev_token:
+		if not prev_token: # CHECK IF THIS IS THE FIRST TOKEN ITERATION
+			bi_dict[token] = {}
 			prev_token = token
 			continue
-		
-		if prev_token not in bi_dict:
-			bi_dict[prev_token] = {} 
+		if token not in bi_dict[prev_token]: # CHECK IF BIGRAM EXISTS IN DICT ALREADY
+			bi_dict[prev_token][token] = 1 # SET TO 1 IF IT DOES NOT
+		else:
+			bi_dict[prev_token][token] += 1 # ADD 1 IF IT DOES
 
 		if token not in bi_dict:
-			bi_dict[token] = 2
+			bi_dict[token] = {}
+		prev_token = token
 
 def get_gram_counts(data_dir,language):
 
@@ -82,7 +103,7 @@ def get_gram_counts(data_dir,language):
 	            	data_list.append(processed_sentence)
 	            	uni_dict, bi_dict = compute_unigram_dict(processed_sentence,uni_dict,bi_dict)
 
-	return data_list, uni_dict
+	return data_list, uni_dict, bi_dict
 
 def lm_train(data_dir, language, fn_LM):
 	"""
@@ -117,10 +138,10 @@ def lm_train(data_dir, language, fn_LM):
 	# 	with open("data_list.txt", "wb") as fp:   #Pickling
 	# 		pickle.dump(data_list, fp)
 
-	data_list, uni_dict = get_gram_counts(data_dir,language)
+	data_list, uni_dict, bi_dict = get_gram_counts(data_dir,language)
 	data_str = ' '.join(data_list)
-	# uni_val = compute_unigram_dict(data_str)
 
+	LM =
 	# print(uni_dict[")"])
 	# print(data_str.count(")"))
 
