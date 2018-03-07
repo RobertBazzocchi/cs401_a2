@@ -52,6 +52,7 @@ def get_gram_counts(data_dir,language):
 	data_list = []
 	uni_dict = {}
 	bi_dict = {}
+	
 	# ITERATE THROUGH EACH FILE IN THE TRAINING DATA
 	for subdir, dirs, files in os.walk(data_dir):
 	    for file in files:
@@ -64,7 +65,7 @@ def get_gram_counts(data_dir,language):
 
 	        if process: # PROCESS SENTENES IN THE FILE
 	            print("Processing file: " + file)
-	            path = '../data/Hansard/Training/'+file
+	            path = data_dir+file
 	            hansard_file = open(path,'r')
 
 	            for sentence in hansard_file.readlines():
