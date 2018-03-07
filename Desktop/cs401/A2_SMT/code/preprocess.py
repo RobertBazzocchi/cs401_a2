@@ -29,6 +29,7 @@ def preprocess(in_sentence, language):
 	in_sentence = in_sentence.lower()
 
 	# SEPARATE PUNCTUATION (i.e., commas, colons and semicolons, parentheses, dashes between parentheses, mathematical operators (e.g., +, -, <, >, =), and quotation marks.)
+
 	# print("_______________________INPUT SENTENCE_______________________")
 	# print(in_sentence)
 
@@ -64,11 +65,14 @@ def main():
             	language = "e"
             if file.endswith(".f"):
             	language = "f"
-            else: continue # ACCOUNTS FOR .txt FILE IN TRAINING FOLDER
-
+            if file.endswith(".txt"):
+            	continue # ACCOUNTS FOR .txt FILE IN TRAINING FOLDER
+            print(file)
             path = '../data/Hansard/Training/'+file
             hansard_file = open(path,'r')
 
             for sentence in hansard_file.readlines():
             	preprocess(sentence,language)
+
+#_____________TEST PREPROCESSOR_____________          	
 main()
