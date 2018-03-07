@@ -49,9 +49,11 @@ def preprocess(in_sentence, language):
 	if in_sentence.strip()[-1] in string.punctuation and in_sentence.strip()[-1] not in ',:;()+=\"<>\-':
 		out_sentence += ' ' + in_sentence.strip()[-1]
 
+	# ADD START SENTENCE AND END SENTENCE TAGS
+	out_sentence = "SENTSTART " + out_sentence + " SENTEND"
+
 	# print("_______________________OUTPUT SENTENCE_______________________")
 	# print(out_sentence)
-
 	return out_sentence
 
 def main():
