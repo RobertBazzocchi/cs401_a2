@@ -3,9 +3,6 @@ import pickle
 import os
 import string
 
-# global prev_token
-# prev_token = None
-
 def compute_unigram_dict(sentence, uni_dict, bi_dict):
 	"""
 	INPUTS:
@@ -18,6 +15,7 @@ def compute_unigram_dict(sentence, uni_dict, bi_dict):
 	bi_dict		: (dictionary) modified bigram model including data from sentence
 	"""
 	sentence_tokens = sentence.split()
+
 	global prev_token
 	for token in sentence_tokens: # SPLITS THE DATA INTO WORDS AND PUNCTUATION
 		
@@ -43,7 +41,6 @@ def compute_unigram_dict(sentence, uni_dict, bi_dict):
 		if token not in bi_dict:
 			bi_dict[token] = {}
 		prev_token = token
-
 	return uni_dict, bi_dict
 
 def get_gram_counts(data_dir,language):
@@ -52,7 +49,7 @@ def get_gram_counts(data_dir,language):
 	data_list = []
 	uni_dict = {}
 	bi_dict = {}
-	
+
 	# ITERATE THROUGH EACH FILE IN THE TRAINING DATA
 	for subdir, dirs, files in os.walk(data_dir):
 	    for file in files:
@@ -94,6 +91,10 @@ def lm_train(data_dir, language, fn_LM):
 	# INITIALIZE AN EMPTY LM DICTIONARY
 	LM = {}
 
+	# DECLARE prev_token AS A GLOBAL VARIABLE AND INITIALIZE TO NONE
+	global prev_token
+	prev_token = None
+
 	# GET UNIGRAM AND BIGRAM MODELS FROM FUNCTION get_gram_counts
 	data_list, uni_dict, bi_dict = get_gram_counts(data_dir,language)
 
@@ -113,8 +114,6 @@ def lm_train(data_dir, language, fn_LM):
 def main():
 	data_dir = '../data/Hansard/Training/'
 	for language in ["e","f"]:
-		global prev_token
-		prev_token = None
 		fn_LM = '../models/'+language+'_language_model'
 		lm_train(data_dir, language, fn_LM) # CHANGE FOR SUBMISSION
 

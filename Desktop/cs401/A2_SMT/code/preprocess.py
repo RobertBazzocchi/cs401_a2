@@ -77,4 +77,4 @@ def main():
             	preprocess(sentence,language)
 
 #_____________TEST PREPROCESSOR_____________          	
-main()
+# main()
