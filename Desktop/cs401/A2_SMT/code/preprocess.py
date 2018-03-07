@@ -5,6 +5,7 @@ import json # ADDED
 import html # ADDED
 import spacy # ADDED
 import time # ADDED
+import string
 
 global punctuation, contractions
 punctuation = r"[\w]+|[,:;()+=\"<>\-]|(?:\'\')"
@@ -28,11 +29,8 @@ def preprocess(in_sentence, language):
 	in_sentence = in_sentence.lower()
 
 	# SEPARATE PUNCTUATION (i.e., commas, colons and semicolons, parentheses, dashes between parentheses, mathematical operators (e.g., +, -, <, >, =), and quotation marks.)
-	p = False
-	print("_______________________INPUT SENTENCE_______________________")
-	print(in_sentence)
-	p = True
-	
+	# print("_______________________INPUT SENTENCE_______________________")
+	# print(in_sentence)
 
 	# PROBLEM: IS NOT SPLITTING THE '' FROM THE BEGINNING OF QUOTES, ONLY SPLITS THE END
 	global punctuation
@@ -46,9 +44,12 @@ def preprocess(in_sentence, language):
 		sep_clitics = re.findall(contractions, out_sentence)
 		out_sentence = " ".join(sep_clitics)
 
-	if p:
-		print("_______________________OUTPUT SENTENCE_______________________")
-		print(out_sentence)
+	# IF LAST SENTENCE PUNCTUATION WAS SPLIT, SPLIT IT
+	if in_sentence.strip()[-1] in string.punctuation and in_sentence.strip()[-1] not in ',:;()+=\"<>\-':
+		out_sentence += ' ' + in_sentence.strip()[-1]
+
+	# print("_______________________OUTPUT SENTENCE_______________________")
+	# print(out_sentence)
 
 	return out_sentence
 
@@ -61,11 +62,9 @@ def main():
                 continue
             if file.endswith(".e"): # DETERMINE THE LANGUAGE AND SET THE LANGUAGE VARIABLE
             	language = "e"
-            else:
+            if file.endswith(".f"):
             	language = "f"
-
-            fullFile = os.path.join(subdir, file)
-            # print("Processing " + fullFile)
+            else: continue # ACCOUNTS FOR .txt FILE IN TRAINING FOLDER
 
             path = '../data/Hansard/Training/'+file
             hansard_file = open(path,'r')

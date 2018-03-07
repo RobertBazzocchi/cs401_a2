@@ -3,37 +3,19 @@ import pickle
 import os
 import string
 
-global prev_token
-prev_token = None
-# def compute_unigram_dict(data_str):
-# 	"""
-# 	INPUTS:
-# 	data_str	: (string) all the sentences in a training set for a language model
-
-# 	OUTPUT:
-# 	uni_dict	: (dictionary) with words as keys and their unigram count as values
-# 	"""
-
-# 	uni_dict = {}
-# 	i = 0
-# 	data_str_tokens = data_str.split()
-
-# 	for token in data_str_tokens: # SPLITS THE DATA INTO WORDS AND PUNCTUATION
-# 		if token in ["(",")"]: # ACCOUNT FOR PARANTHESES ERROR
-# 			token = "\\"+token
-# 		uni_dict[token] = len(re.findall(token,data_str))
-# 		if i %500 == 0:
-# 			print(uni_dict)
-# 		i+=1
-# 	return uni_dict
+# global prev_token
+# prev_token = None
 
 def compute_unigram_dict(sentence, uni_dict, bi_dict):
 	"""
 	INPUTS:
-	data_str	: (string) all the sentences in a training set for a language model
+	sentence	: (string) a sentences from the training set
+	uni_dict  	: (dictionary) containing the unigram model data
+	bi_dict 	: (dictionary) containing the bigram model data
 
 	OUTPUT:
-	uni_dict	: (dictionary) with words as keys and their unigram count as values
+	uni_dict	: (dictionary) modified unigram model including data from sentence
+	bi_dict		: (dictionary) modified bigram model including data from sentence
 	"""
 	sentence_tokens = sentence.split()
 	global prev_token
@@ -50,6 +32,9 @@ def compute_unigram_dict(sentence, uni_dict, bi_dict):
 			bi_dict[token] = {}
 			prev_token = token
 			continue
+		# if token == ".":
+		# 	print(bi_dict)
+		# 	print(bi_dict[prev_token])
 		if token not in bi_dict[prev_token]: # CHECK IF BIGRAM EXISTS IN DICT ALREADY
 			bi_dict[prev_token][token] = 1 # SET TO 1 IF IT DOES NOT
 		else:
@@ -60,22 +45,6 @@ def compute_unigram_dict(sentence, uni_dict, bi_dict):
 		prev_token = token
 
 	return uni_dict, bi_dict
-
-def bi_gram():
-	prev_token = None
-	for token in sentence_tokens:
-		if not prev_token: # CHECK IF THIS IS THE FIRST TOKEN ITERATION
-			bi_dict[token] = {}
-			prev_token = token
-			continue
-		if token not in bi_dict[prev_token]: # CHECK IF BIGRAM EXISTS IN DICT ALREADY
-			bi_dict[prev_token][token] = 1 # SET TO 1 IF IT DOES NOT
-		else:
-			bi_dict[prev_token][token] += 1 # ADD 1 IF IT DOES
-
-		if token not in bi_dict:
-			bi_dict[token] = {}
-		prev_token = token
 
 def get_gram_counts(data_dir,language):
 
@@ -120,45 +89,46 @@ def lm_train(data_dir, language, fn_LM):
 	OUTPUT
 
 	LM			: (dictionary) a specialized language model
-
-	The file fn_LM must contain the data structured called "LM", which is a dictionary
-	having two fields: 'uni' and 'bi', each of which holds sub-structures which 
-	incorporate unigram or bigram counts
-
-	e.g., LM['uni']['word'] = 5 		# The word 'word' appears 5 times
-		  LM['bi']['word']['bird'] = 2 	# The bigram 'word bird' appears 2 times.
 	"""
+	# INITIALIZE AN EMPTY LM DICTIONARY
+	LM = {}
 
-	# CHECK IF DATA_LIST WAS ALREADY COMPUTED
-	# if os.path.isfile("data_list.txt"):
-	# 	with open("data_list.txt", "rb") as fp:   # Unpickling
-	# 		data_list = pickle.load(fp)
-	# else:
-	# 	data_list, uni_dict = get_gram_counts(data_dir,language)
-	# 	with open("data_list.txt", "wb") as fp:   #Pickling
-	# 		pickle.dump(data_list, fp)
-
+	# GET UNIGRAM AND BIGRAM MODELS FROM FUNCTION get_gram_counts
 	data_list, uni_dict, bi_dict = get_gram_counts(data_dir,language)
+
+	# AN ADDITIONAL RETURNED VARIABLE THAT CONTAINS ALL SENTENCES IN ONE STRING
 	data_str = ' '.join(data_list)
 
-	LM =
-	# print(uni_dict[")"])
-	# print(data_str.count(")"))
+	# SET THE KEYS OF LM TO BE THE RETURNED DICTIONARIES FROM get_gram_counts
+	LM["uni"] = uni_dict
+	LM["bi"] = bi_dict
 
-	return
-	#Save Model
+	# SAVE THE MODEL
 	with open(fn_LM+'.pickle', 'wb') as handle:
-	    pickle.dump(language_model, handle, protocol=pickle.HIGHEST_PROTOCOL)
+	    pickle.dump(LM, handle, protocol=pickle.HIGHEST_PROTOCOL)
 	    
-	return language_model
+	return LM
 
 def main():
 	data_dir = '../data/Hansard/Training/'
-	language = "e"
-	fn_LM = '../models/'+language+'_language_model'
-	lm_train(data_dir, language, fn_LM) # CHANGE FOR SUBMISSION
+	for language in ["e","f"]:
+		global prev_token
+		prev_token = None
+		fn_LM = '../models/'+language+'_language_model'
+		lm_train(data_dir, language, fn_LM) # CHANGE FOR SUBMISSION
 
-main()
+def load_LMs(LM_path):
+	LM = pickle.load(open(LM_path, "rb"))
+	return LM
+
+#________________________RUN EACH PART________________________
+# 1. RUN main() TO BUILD AND SAVE THE FRENCH AND ENGLISH LMS FROM HANSARD TRAINING DATA
+# main()
+
+# 2. RUN load_LMs() TO LOAD LMs
+# e_LM = load_LMs("../models/e_language_model.pickle") # LOAD ENGLISH LM
+# f_LM = load_LMs("../models/f_language_model.pickle") # LOAD FRENCH LM
+
 
 
 
