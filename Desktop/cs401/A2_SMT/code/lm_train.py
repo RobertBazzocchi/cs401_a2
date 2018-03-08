@@ -3,7 +3,7 @@ import pickle
 import os
 import string
 
-def compute_unigram_dict(sentence, uni_dict, bi_dict):
+def compute_dicts(sentence, uni_dict, bi_dict):
 	"""
 	INPUTS:
 	sentence	: (string) a sentences from the training set
@@ -15,8 +15,8 @@ def compute_unigram_dict(sentence, uni_dict, bi_dict):
 	bi_dict		: (dictionary) modified bigram model including data from sentence
 	"""
 	sentence_tokens = sentence.split()
-
 	global prev_token
+
 	for token in sentence_tokens: # SPLITS THE DATA INTO WORDS AND PUNCTUATION
 		
 		# __________BUILD UNIGRAM__________
@@ -26,13 +26,10 @@ def compute_unigram_dict(sentence, uni_dict, bi_dict):
 			uni_dict[token] += 1
 
 		#___________BUILD BIGRAM___________
-		if not prev_token: # CHECK IF THIS IS THE FIRST TOKEN ITERATION
-			bi_dict[token] = {}
+		if token == "SENTSTART": # CHECK IF THIS IS THE FIRST TOKEN ITERATION
+			if token not in bi_dict:
+				bi_dict[token] = {}
 			prev_token = token
-			continue
-		# if token == ".":
-		# 	print(bi_dict)
-		# 	print(bi_dict[prev_token])
 		if token not in bi_dict[prev_token]: # CHECK IF BIGRAM EXISTS IN DICT ALREADY
 			bi_dict[prev_token][token] = 1 # SET TO 1 IF IT DOES NOT
 		else:
@@ -68,7 +65,7 @@ def get_gram_counts(data_dir,language):
 	            for sentence in hansard_file.readlines():
 	            	processed_sentence = preprocess(sentence,language)
 	            	data_list.append(processed_sentence)
-	            	uni_dict, bi_dict = compute_unigram_dict(processed_sentence,uni_dict,bi_dict)
+	            	uni_dict, bi_dict = compute_dicts(processed_sentence,uni_dict,bi_dict)
 
 	return data_list, uni_dict, bi_dict
 
