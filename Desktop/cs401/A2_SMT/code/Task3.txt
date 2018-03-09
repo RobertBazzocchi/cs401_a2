@@ -1,0 +1,29 @@
+################################################## 
+# SUMMARY OF DATA PERPLEXITY WITH VARYING DELTAS # 
+################################################## 
+
+1. ML Estimate Perplexity: 
+   e: 13.364796950311662 
+   f: 12.931398441115942 
+
+2. Add-Delta Estimate Perplexity: 
+   e: 
+   delta = 0.0001: 13.426278170854948 
+   delta = 0.001: 13.82608683406006 
+   delta = 0.1: 24.83420765072719 
+   delta = 0.5: 44.043109558270665 
+   delta = 0.9: 57.85871501042954 
+   f: 
+   delta = 0.0001: 13.026861150367768 
+   delta = 0.001: 13.597488176017116 
+   delta = 0.1: 27.437321087923426 
+   delta = 0.5: 51.88870165764554 
+   delta = 0.9: 69.94511224546198 
+____________________________________________________________________________________
+Observation: 
+
+Firstly, the English LM has a slightly larger perplexity than the French model when performing MLE. However, with the add-delta estimate, the French LM perplexity increases at a greater rate than that of the English LM. 
+
+It is evident that the perplexity of the models increases proportionally with the increase in delta. However, values of delta < 0.1 do not have a significant impact on perplexity when compared to values of delta > 0.1. 
+
+This can attributed to the fact that larger values of delta tend to widen the probability distribution more than smaller values. When a large delta value is used (i.e. closer to 1), it disperses the probability distribution over a wider range of bigrams, allocating less probability to bigrams that are more likely.
