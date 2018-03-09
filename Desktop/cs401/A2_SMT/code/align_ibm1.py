@@ -4,7 +4,6 @@ from preprocess import *
 from math import log
 import os
 
-
 def align_ibm1(train_dir, num_sentences, max_iter, fn_AM):
     """
 	Implements the training of IBM-1 word alignment algoirthm. 
@@ -36,8 +35,7 @@ def align_ibm1(train_dir, num_sentences, max_iter, fn_AM):
 
     # ITERATE BETWEEN E AND M STEPS
     while max_iter > 0:
-        t_count = {}
-        total = {}
+        t_count, total = {}, {}
         for pair_num in processed_sentences:
             j = num_sentences
             while j > 0:
@@ -45,34 +43,31 @@ def align_ibm1(train_dir, num_sentences, max_iter, fn_AM):
                 	eng = processed_sentences[pair_num]["e"][j]
                 	fre = processed_sentences[pair_num]["f"][j]
                 except KeyError:
-                	print("Note: processed_sentences has fewer than {} sentence pairs.".format(num_sentences))
-                
+                	# print("Note: processed_sentences has fewer than {} sentence pairs.".format(num_sentences))
+                	error = 1
                 # E_STEP
                 t_count, total = em_step(eng, fre, AM, t_count, total)
                 j-=1
         # M_STEP
         for e_word in total:
-        	for f_word in t_count:
-        		if e_word in t_count[f_word]:
-        			AM[e_word][f_word] = t_count[f_word][e_word] / total[e_word]
-        
+        	for f_word in t_count[e_word]:
+        		AM[e_word][f_word] = t_count[e_word][f_word] / total[e_word]
         max_iter -= 1
 
     # TEST TRANSLATOR ON SPECIFIC ENGLISH WORDS
     while 1:
-	    max_val = 0
+	    probs = []
+	    words = []
 	    test_word = input("Enter a word you would like to translate (or type \"N\" to exit loop): ")
 	    if test_word == "N":
 	    	break
 	    try:
 		    for key in AM[test_word]:
-		    	if AM[test_word][key] == 1.0: 
-		    		max_key = key
-		    		break
-		    	if AM[test_word][key] > max_val:
-		    		max_val = AM[test_word][key]
-		    		max_key = key
-		    print("French word: ", max_key)
+		    	probs.append(AM[test_word][key])
+		    	words.append(key)
+		    print("French word (1st guess): ", words[probs.index(max(probs))])
+		    probs.remove(max(probs))
+		    print("French word (2nd guess): ", words[probs.index(max(probs))])
 	    except KeyError:
 		    print("Error: \"{}\" does not exist in the data model.".format(test_word))
 
@@ -132,11 +127,8 @@ def read_hansard(train_dir, num_sentences, AM):
             	i -= 1
             if language == "f": # UPDATE PAIRS IF THE F OF THE (E,F) PAIR HAS BEEN PROCESSED
             	j = num_sentences
-            	# print(len(processed_sentences[pair_num][language]))
-            	# print(len(hansard_file.readlines()))
+
             	while j > 0:
-            		# print(j)
-            		# print(processed_sentences[pair_num]["e"])
             		try:
             			eng = processed_sentences[pair_num]["e"][j]
             			fre = processed_sentences[pair_num]["f"][j]
@@ -145,7 +137,6 @@ def read_hansard(train_dir, num_sentences, AM):
 
             		# UPDATE AM AND INITIALIZE UNIFORMLY
             		AM = initialize(eng, fre, AM)
-
             		# # EM_STEP
             		# t_count, total = em_step(eng, fre, AM)
 
@@ -159,73 +150,82 @@ def initialize(eng, fre, AM):
 	Initialize alignment model uniformly.
 	Only set non-zero probabilities where word pairs appear in corresponding sentences.
 	"""
-	e_words = eng.split()
-	f_words = fre.split()
+	e_words = eng.split()[1:-1] # REMOVE SENTSTART AND SENTEND FROM THE WORD LISTS
+	f_words = fre.split()[1:-1] 
 
 	for e_word in e_words:
-		if e_word == "SENTSTART" or e_word == "SENTEND":
-			continue
+		# if e_word == "SENTSTART" or e_word == "SENTEND":
+		# 	continue
 		if e_word not in AM:
 			AM[e_word] = {}
 		for f_word in f_words:
 			if f_word not in AM[e_word]:
 				AM[e_word][f_word] = 1
 				AM[e_word] = dict.fromkeys(AM[e_word], 1/len(AM[e_word]))
+
 	return AM
 
 def em_step(eng, fre, AM, t_count, total):
-    """
+	"""
 	One step in the EM algorithm.
 	Follows the pseudo-code given in the tutorial slides.
 	"""
 
-    e_words = eng.split()[1:-1] # REMOVE SENTSTART AND SENTEND FROM THE WORD LISTS
-    f_words = fre.split()[1:-1]
-    # print("STARTING EM_STEP")
-    # initialize(eng, fre, AM)
+	e_words = eng.split()[1:-1] # REMOVE SENTSTART AND SENTEND FROM THE WORD LISTS
+	f_words = fre.split()[1:-1]
 
-    for f_word in f_words:
-    	denom_c = 0
-    	t_count[f_word] = {}
-    	for e_word in e_words:
-    		denom_c += AM[e_word][f_word] * f_words.count(f_word)
-    		# if e_word not in t_count[f_word]:
-    		t_count[f_word][e_word] = 0
-    		# if e_word not in total:
-    		total[e_word] = 0
-    	for e_word in e_words:
-    		t_count[f_word][e_word] += (AM[e_word][f_word] * f_words.count(f_word) * e_words.count(e_word))/denom_c
-    		total[e_word] += (AM[e_word][f_word] * f_words.count(f_word) * e_words.count(e_word))/denom_c
-    		# total[e_word] += 1
-    		# print(e_word,total[e_word])
-    # print("ENDING EM_STEP \n")
-    return t_count, total
+	# initialize(eng, fre, AM)
 
+	for f_word in set(f_words):
+		denom_c = 0
+		for e_word in set(e_words):
+			denom_c += AM[e_word][f_word] * f_words.count(f_word)
+			if e_word not in t_count:
+				t_count[e_word] = {}
+			if f_word not in t_count[e_word]:
+				t_count[e_word][f_word] = 0
+			if e_word not in total:
+				total[e_word] = 0
+		for e_word in set(e_words):
+			t_count[e_word][f_word] += (AM[e_word][f_word] * f_words.count(f_word) * e_words.count(e_word))/denom_c
+			total[e_word] += (AM[e_word][f_word] * f_words.count(f_word) * e_words.count(e_word))/denom_c
+			
+	return t_count, total
 
-	# initialize P(f|e)
-	# for a number of iterations:
-	# set tcount(f, e) to 0 for all f, e
-	# set total(e) to 0 for all e
-	# for each sentence pair (F, E) in training corpus:
+# def em_step(eng, fre, AM, t_count, total):
+#     """
+# 	One step in the EM algorithm.
+# 	Follows the pseudo-code given in the tutorial slides.
+# 	"""
 
-	#     for each unique word f in F:
-	#       denom_c = 0
-	#       for each unique word e in E:
-	# 			denom_c += P(f|e) * F.count(f) 
-	#		for each unique word e in E:
-	#			 tcount(f, e) += P(f|e) * F.count(f) * E.count(e) / denom_c
-	#			 total(e) += P(f|e) * F.count(f) * E.count(e) / denom_c
-	#  for each e in domain(total(:)):
-	#	  for each f in domain(tcount(:,e)): 
-	#		P(f|e) = tcount(f, e) / total(e)
+#     e_words = eng.split()[1:-1] # REMOVE SENTSTART AND SENTEND FROM THE WORD LISTS
+#     f_words = fre.split()[1:-1]
 
-# AM = align_ibm1("../data/Hansard/Training/", 8, 5, "AM")
+#     # initialize(eng, fre, AM)
+#     assigned = False
+#     for f_word in f_words:
+#     	denom_c = 0
+#     	if f_word not in t_count:
+#     		t_count[f_word] = {}
+#     	for e_word in e_words:
+#     		denom_c += AM[e_word][f_word]
+#     		if e_word not in t_count[f_word]:
+#     			t_count[f_word][e_word] = 0
+#     		if e_word not in total:
+#     			total[e_word] = 0
+#     	i = 0
+#     	for e_word in e_words:
+#     		i+=1
+#     		# print("Iter {}: [{}][{}] is {}.".format(i,f_word,e_word,t_count[f_word][e_word]))
+#     		t_count[f_word][e_word] += AM[e_word][f_word]/denom_c
+#     		# total[e_word] += (AM[e_word][f_word] * f_words.count(f_word) * e_words.count(e_word))/denom_c
+#     		if not assigned:
+#     			total[e_word] += 1
+#     	assigned = True
+    		
+#     return t_count, total
 
-
-
-
-
-
+# AM = align_ibm1("../data/Hansard/Training/", 15, 10, "AM")
 
 
 

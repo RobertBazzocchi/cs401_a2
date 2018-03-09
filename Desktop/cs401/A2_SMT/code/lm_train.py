@@ -112,7 +112,7 @@ def main():
 	data_dir = '../data/Hansard/Training/'
 	for language in ["e","f"]:
 		fn_LM = '../models/'+language+'_language_model'
-		lm_train(data_dir, language, fn_LM) # CHANGE FOR SUBMISSION
+		LM = lm_train(data_dir, language, fn_LM) # CHANGE FOR SUBMISSION
 
 def load_LMs(LM_path):
 	LM = pickle.load(open(LM_path, "rb"))
@@ -125,12 +125,6 @@ def load_LMs(LM_path):
 # 2. RUN load_LMs() TO LOAD LMs
 # e_LM = load_LMs("../models/e_language_model.pickle") # LOAD ENGLISH LM
 # f_LM = load_LMs("../models/f_language_model.pickle") # LOAD FRENCH LM
-
-
-
-
-
-
 
 
 

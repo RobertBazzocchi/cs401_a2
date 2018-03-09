@@ -35,7 +35,7 @@ def preprocess(in_sentence, language):
 
 	# PROBLEM: IS NOT SPLITTING THE '' FROM THE BEGINNING OF QUOTES, ONLY SPLITS THE END
 	global punctuation
-	punctuation = r"[\w']+|[,:;()+=\"<>\-]|(?:\'\')" #[!?.\_\/$&\*+=()@%:;<>\[\]\^\\\#\"\}\{\~\|\-]+"
+	punctuation = r"[\w']+|[,:;()+=\"<>\-]" # punctuation = r"[\w]+|[,:;()+=\"<>\-]|(?:\'\')" #[!?.\_\/$&\*+=()@%:;<>\[\]\^\\\#\"\}\{\~\|\-]+"
 	sep_punc = re.findall(punctuation, in_sentence)
 	out_sentence = " ".join(sep_punc)
 
@@ -69,12 +69,12 @@ def main():
             	language = "f"
             if file.endswith(".txt"):
             	continue # ACCOUNTS FOR .txt FILE IN TRAINING FOLDER
-            print(file)
             path = '../data/Hansard/Training/'+file
             hansard_file = open(path,'r')
 
             for sentence in hansard_file.readlines():
-            	preprocess(sentence,language)
+            	preprocessed_sentence = preprocess(sentence,language)
+            	if "\'" in preprocessed_sentence: print(preprocessed_sentence)
 
 #_____________TEST PREPROCESSOR_____________          	
 # main()
