@@ -46,7 +46,7 @@ def align_ibm1(train_dir, num_sentences, max_iter, fn_AM):
                 	# print("Note: processed_sentences has fewer than {} sentence pairs.".format(num_sentences))
                 	error = 1
                 # E_STEP
-                t_count, total = em_step(eng, fre, AM, t_count, total)
+                t_count, total = e_step(eng, fre, AM, t_count, total)
                 j-=1
         # M_STEP
         for e_word in total:
@@ -54,7 +54,7 @@ def align_ibm1(train_dir, num_sentences, max_iter, fn_AM):
         		AM[e_word][f_word] = t_count[e_word][f_word] / total[e_word]
         max_iter -= 1
 
-    # TEST TRANSLATOR ON SPECIFIC ENGLISH WORDS
+    ################ TEST TRANSLATOR ON SPECIFIC ENGLISH WORDS #################
     while 1:
 	    probs = []
 	    words = []
@@ -127,7 +127,6 @@ def read_hansard(train_dir, num_sentences, AM):
             	i -= 1
             if language == "f": # UPDATE PAIRS IF THE F OF THE (E,F) PAIR HAS BEEN PROCESSED
             	j = num_sentences
-
             	while j > 0:
             		try:
             			eng = processed_sentences[pair_num]["e"][j]
@@ -137,8 +136,6 @@ def read_hansard(train_dir, num_sentences, AM):
 
             		# UPDATE AM AND INITIALIZE UNIFORMLY
             		AM = initialize(eng, fre, AM)
-            		# # EM_STEP
-            		# t_count, total = em_step(eng, fre, AM)
 
             		j-=1
             	pair_num +=1
@@ -149,7 +146,7 @@ def initialize(eng, fre, AM):
 	"""
 	Initialize alignment model uniformly.
 	Only set non-zero probabilities where word pairs appear in corresponding sentences.
-	"""
+	"""	
 	e_words = eng.split()[1:-1] # REMOVE SENTSTART AND SENTEND FROM THE WORD LISTS
 	f_words = fre.split()[1:-1] 
 
@@ -165,12 +162,11 @@ def initialize(eng, fre, AM):
 
 	return AM
 
-def em_step(eng, fre, AM, t_count, total):
+def e_step(eng, fre, AM, t_count, total):
 	"""
 	One step in the EM algorithm.
 	Follows the pseudo-code given in the tutorial slides.
 	"""
-
 	e_words = eng.split()[1:-1] # REMOVE SENTSTART AND SENTEND FROM THE WORD LISTS
 	f_words = fre.split()[1:-1]
 
@@ -192,42 +188,8 @@ def em_step(eng, fre, AM, t_count, total):
 			
 	return t_count, total
 
-# def em_step(eng, fre, AM, t_count, total):
-#     """
-# 	One step in the EM algorithm.
-# 	Follows the pseudo-code given in the tutorial slides.
-# 	"""
-
-#     e_words = eng.split()[1:-1] # REMOVE SENTSTART AND SENTEND FROM THE WORD LISTS
-#     f_words = fre.split()[1:-1]
-
-#     # initialize(eng, fre, AM)
-#     assigned = False
-#     for f_word in f_words:
-#     	denom_c = 0
-#     	if f_word not in t_count:
-#     		t_count[f_word] = {}
-#     	for e_word in e_words:
-#     		denom_c += AM[e_word][f_word]
-#     		if e_word not in t_count[f_word]:
-#     			t_count[f_word][e_word] = 0
-#     		if e_word not in total:
-#     			total[e_word] = 0
-#     	i = 0
-#     	for e_word in e_words:
-#     		i+=1
-#     		# print("Iter {}: [{}][{}] is {}.".format(i,f_word,e_word,t_count[f_word][e_word]))
-#     		t_count[f_word][e_word] += AM[e_word][f_word]/denom_c
-#     		# total[e_word] += (AM[e_word][f_word] * f_words.count(f_word) * e_words.count(e_word))/denom_c
-#     		if not assigned:
-#     			total[e_word] += 1
-#     	assigned = True
-    		
-#     return t_count, total
-
-# AM = align_ibm1("../data/Hansard/Training/", 15, 10, "AM")
-
-
-
-
-
+AM = align_ibm1("/u/cs401/A2 SMT/data/Hansard/Training/", 2, 15, "AM")
+print(AM)
+# SAVE THE MODEL
+with open('am'+'.pickle', 'wb') as handle:
+    pickle.dump(AM, handle, protocol=pickle.HIGHEST_PROTOCOL)

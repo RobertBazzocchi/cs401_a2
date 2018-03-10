@@ -2,7 +2,6 @@ import re
 import argparse # ADDED
 import os # ADDED
 import json # ADDED
-import html # ADDED
 import spacy # ADDED
 import time # ADDED
 import string
@@ -33,13 +32,11 @@ def preprocess(in_sentence, language):
 	# print("_______________________INPUT SENTENCE_______________________")
 	# print(in_sentence)
 
-	# PROBLEM: IS NOT SPLITTING THE '' FROM THE BEGINNING OF QUOTES, ONLY SPLITS THE END
 	global punctuation
 	punctuation = r"[\w']+|[,:;()+=\"<>\-]" # punctuation = r"[\w]+|[,:;()+=\"<>\-]|(?:\'\')" #[!?.\_\/$&\*+=()@%:;<>\[\]\^\\\#\"\}\{\~\|\-]+"
 	sep_punc = re.findall(punctuation, in_sentence)
 	out_sentence = " ".join(sep_punc)
 
-	# PROBLEM: STILL HAVE TO ACCOUNT FOR DOUBLE QUOTES
 	if language == 'f':
 		global contractions
 		sep_clitics = re.findall(contractions, out_sentence)
@@ -69,12 +66,11 @@ def main():
             	language = "f"
             if file.endswith(".txt"):
             	continue # ACCOUNTS FOR .txt FILE IN TRAINING FOLDER
-            path = '../data/Hansard/Training/'+file
+            path = indir+file
             hansard_file = open(path,'r')
 
             for sentence in hansard_file.readlines():
             	preprocessed_sentence = preprocess(sentence,language)
-            	if "\'" in preprocessed_sentence: print(preprocessed_sentence)
 
 #_____________TEST PREPROCESSOR_____________          	
-# main()
+main()

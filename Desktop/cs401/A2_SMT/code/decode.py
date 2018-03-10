@@ -26,11 +26,11 @@ def decode(french, LM, AM):
             alternatives = [("UNK",0.01)]
         proposed_english_words.append(alternatives)
 
-    #print(proposed_english_words)
+    # print(proposed_english_words)
     # Randomly Iterate to find better sentences
     prediction = [word[0] for word in proposed_english_words]
     prediction_score = calc_score(prediction, LM)
-    #print("First Prediction:", " ".join([x[0] for x in prediction]), "\t Score:", prediction_score)
+    # print("First Prediction:", " ".join([x[0] for x in prediction]), "\t Score:", prediction_score)
     
     for i in range(MAXTRANS):
         #pick new words
@@ -54,8 +54,7 @@ def decode(french, LM, AM):
     #print()
     #print("Last Prediction:", " ".join([x[0] for x in prediction]), "\t Score:", prediction_score)
     return " ".join([x[0] for x in prediction])
-    
-    
+
 def deal_with_alternatives(lst, word, prob, num_words = 5):
     if len(lst) < num_words:
         lst.append((word, prob))

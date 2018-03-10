@@ -27,7 +27,7 @@ def log_prob(sentence, LM, smoothing=False, delta=0, vocabSize=0):
 
 	# COMPUTE AND RETURN THE ML ESTIMATE
 	sentence_tokens = sentence.split()
-	
+
 	# COMPUTE PROBABILITY OF SENTENCE
 	for token in sentence_tokens: # SPLITS THE DATA INTO WORDS AND PUNCTUATION
 		if token == "SENTSTART": # ASSUMING STARTSENT INCLUDED IN PROCESSED SENTENCE
@@ -35,13 +35,20 @@ def log_prob(sentence, LM, smoothing=False, delta=0, vocabSize=0):
 			continue
 		else:
 			try:
-				p_bigram = uni_dict[prev_token]/bi_dict[prev_token][token]
+				if smoothing:
+					p_bigram = (bi_dict[prev_token][token]+delta)/(uni_dict[prev_token]+delta*vocabSize) # HAD THIS BEFORE: uni_dict[prev_token]/bi_dict[prev_token][token]
+				else:
+					p_bigram = (bi_dict[prev_token][token])/(uni_dict[prev_token]) # HAD THIS BEFORE: uni_dict[prev_token]/bi_dict[prev_token][token]
 			except KeyError:
-				print("KeyError: No bigram \"{} {}\".".format(prev_token,token))
+				# print("KeyError: No bigram \"{} {}\".".format(prev_token,token))
 				p_bigram = 0
 				log_prob = float('-inf')
-				return log_prob
+				return log_prob	# RETURNS -inf LOG PROBABILITY IF BIGRAM DOES NOT EXIST
+
 			p_sentence *= p_bigram
-		prev_token = token
-	log_prob = math.log2(p_sentence) # PROBLEM log2() is not defined
+
+		prev_token = token # UPDATE prev_token TO CURRENT token FOR NEXT ITERATION
+	
+	# TAKE THE LOG OF THE PROBABILITY OF THE SENTENCE AND RETURN
+	log_prob = math.log(p_sentence,2)
 	return log_prob

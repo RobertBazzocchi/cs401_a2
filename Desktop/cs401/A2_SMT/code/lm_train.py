@@ -61,7 +61,6 @@ def get_gram_counts(data_dir,language):
 	            print("Processing file: " + file)
 	            path = data_dir+file
 	            hansard_file = open(path,'r')
-
 	            for sentence in hansard_file.readlines():
 	            	processed_sentence = preprocess(sentence,language)
 	            	data_list.append(processed_sentence)
@@ -120,7 +119,7 @@ def load_LMs(LM_path):
 
 #________________________RUN EACH PART________________________
 # 1. RUN main() TO BUILD AND SAVE THE FRENCH AND ENGLISH LMS FROM HANSARD TRAINING DATA
-# main()
+main()
 
 # 2. RUN load_LMs() TO LOAD LMs
 # e_LM = load_LMs("../models/e_language_model.pickle") # LOAD ENGLISH LM

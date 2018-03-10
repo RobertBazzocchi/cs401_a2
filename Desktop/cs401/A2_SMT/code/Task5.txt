@@ -1,0 +1,1055 @@
+################################################## 
+# SUMMARY OF BLEU SCORES ON TRANSLATED SENTENCES # 
+################################################## 
+
+TLDR ANALYSIS:
+
+It is clear that the two references differ from one anther simply by looking at the bleue_score results. In the Task5.e testing file, there are rarely any non-zero outputs beyond those associated with n=1. However, in the Task5.google.e testing file, there are significantly more non-zero outputs for n=1 and even some non-zero bleue_score scores for n=2. This is an indication that translations can vary among the machine translation source.
+
+Comparing to a variety of references may be better because there is no longer dependency on one particular translator and its specific word choices. Furthermore, comparing to multiple references keeps semantics under consideration. What is meant by this is that it is possible to translate a sentence accurately using two different sets of words, as the meaning is more important than the words and their ordering.
+
+Example: Translating “ce travail est difficile”.
+It is arguable that both english sentences below are correct translations of this sentence:
+1. this job is difficult
+2. this work is hard
+
+However, there is not one matching bigram.
+
+==================================================
+ REFERENCE: ../data/Hansard/Testing/Task5.e 
+==================================================
+
+---------------------------------------
+Using AM Model trained on 1K sentences
+---------------------------------------
+Sentence 1:
+n = 1: 0.16666666666666666
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 2:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 3:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 4:
+n = 1: 0.09090909090909091
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 5:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 6:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 7:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 8:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 9:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 10:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 11:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 12:
+n = 1: 0.1111111111111111
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 13:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 14:
+n = 1: 0.13333333333333333
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 15:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 16:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 17:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 18:
+n = 1: 0.06666666666666667
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 19:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 20:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 21:
+n = 1: 0.4
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 22:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 23:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 24:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 25:
+n = 1: 0.2
+n = 2: 0.0
+n = 3: 0.0
+
+
+---------------------------------------
+Using AM Model trained on 10K sentences
+---------------------------------------
+Sentence 1:
+n = 1: 0.16666666666666666
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 2:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 3:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 4:
+n = 1: 0.09090909090909091
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 5:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 6:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 7:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 8:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 9:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 10:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 11:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 12:
+n = 1: 0.1111111111111111
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 13:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 14:
+n = 1: 0.13333333333333333
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 15:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 16:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 17:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 18:
+n = 1: 0.06666666666666667
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 19:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 20:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 21:
+n = 1: 0.4
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 22:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 23:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 24:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 25:
+n = 1: 0.2
+n = 2: 0.0
+n = 3: 0.0
+
+
+---------------------------------------
+Using AM Model trained on 15K sentences
+---------------------------------------
+Sentence 1:
+n = 1: 0.16666666666666666
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 2:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 3:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 4:
+n = 1: 0.09090909090909091
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 5:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 6:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 7:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 8:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 9:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 10:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 11:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 12:
+n = 1: 0.1111111111111111
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 13:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 14:
+n = 1: 0.13333333333333333
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 15:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 16:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 17:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 18:
+n = 1: 0.06666666666666667
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 19:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 20:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 21:
+n = 1: 0.4
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 22:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 23:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 24:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 25:
+n = 1: 0.2
+n = 2: 0.0
+n = 3: 0.0
+
+
+---------------------------------------
+Using AM Model trained on 30K sentences
+---------------------------------------
+Sentence 1:
+n = 1: 0.16666666666666666
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 2:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 3:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 4:
+n = 1: 0.09090909090909091
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 5:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 6:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 7:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 8:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 9:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 10:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 11:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 12:
+n = 1: 0.1111111111111111
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 13:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 14:
+n = 1: 0.13333333333333333
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 15:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 16:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 17:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 18:
+n = 1: 0.06666666666666667
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 19:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 20:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 21:
+n = 1: 0.4
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 22:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 23:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 24:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 25:
+n = 1: 0.2
+n = 2: 0.0
+n = 3: 0.0
+
+==================================================
+ REFERENCE: ../data/Hansard/Testing/Task5.google.e 
+==================================================
+
+---------------------------------------
+Using AM Model trained on 1K sentences
+---------------------------------------
+Sentence 1:
+n = 1: 0.16666666666666666
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 2:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 3:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 4:
+n = 1: 0.09090909090909091
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 5:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 6:
+n = 1: 0.16666666666666666
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 7:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 8:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 9:
+n = 1: 0.2
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 10:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 11:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 12:
+n = 1: 0.1111111111111111
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 13:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 14:
+n = 1: 0.18710139700632356
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 15:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 16:
+n = 1: 0.125
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 17:
+n = 1: 0.3333333333333333
+n = 2: 0.2581988897471611
+n = 3: 0.0
+
+Sentence 18:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 19:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 20:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 21:
+n = 1: 0.4
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 22:
+n = 1: 0.14285714285714285
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 23:
+n = 1: 0.09090909090909091
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 24:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 25:
+n = 1: 0.2
+n = 2: 0.0
+n = 3: 0.0
+
+
+---------------------------------------
+Using AM Model trained on 10K sentences
+---------------------------------------
+Sentence 1:
+n = 1: 0.16666666666666666
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 2:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 3:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 4:
+n = 1: 0.09090909090909091
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 5:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 6:
+n = 1: 0.16666666666666666
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 7:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 8:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 9:
+n = 1: 0.2
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 10:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 11:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 12:
+n = 1: 0.1111111111111111
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 13:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 14:
+n = 1: 0.18710139700632356
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 15:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 16:
+n = 1: 0.125
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 17:
+n = 1: 0.3333333333333333
+n = 2: 0.2581988897471611
+n = 3: 0.0
+
+Sentence 18:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 19:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 20:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 21:
+n = 1: 0.4
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 22:
+n = 1: 0.14285714285714285
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 23:
+n = 1: 0.09090909090909091
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 24:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 25:
+n = 1: 0.2
+n = 2: 0.0
+n = 3: 0.0
+
+
+---------------------------------------
+Using AM Model trained on 15K sentences
+---------------------------------------
+Sentence 1:
+n = 1: 0.16666666666666666
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 2:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 3:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 4:
+n = 1: 0.09090909090909091
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 5:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 6:
+n = 1: 0.16666666666666666
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 7:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 8:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 9:
+n = 1: 0.2
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 10:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 11:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 12:
+n = 1: 0.1111111111111111
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 13:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 14:
+n = 1: 0.18710139700632356
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 15:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 16:
+n = 1: 0.125
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 17:
+n = 1: 0.3333333333333333
+n = 2: 0.2581988897471611
+n = 3: 0.0
+
+Sentence 18:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 19:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 20:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 21:
+n = 1: 0.4
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 22:
+n = 1: 0.14285714285714285
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 23:
+n = 1: 0.09090909090909091
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 24:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 25:
+n = 1: 0.2
+n = 2: 0.0
+n = 3: 0.0
+
+
+---------------------------------------
+Using AM Model trained on 30K sentences
+---------------------------------------
+Sentence 1:
+n = 1: 0.16666666666666666
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 2:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 3:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 4:
+n = 1: 0.09090909090909091
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 5:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 6:
+n = 1: 0.16666666666666666
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 7:
+n = 1: 0.1
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 8:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 9:
+n = 1: 0.2
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 10:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 11:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 12:
+n = 1: 0.1111111111111111
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 13:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 14:
+n = 1: 0.18710139700632356
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 15:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 16:
+n = 1: 0.125
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 17:
+n = 1: 0.3333333333333333
+n = 2: 0.2581988897471611
+n = 3: 0.0
+
+Sentence 18:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 19:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 20:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 21:
+n = 1: 0.4
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 22:
+n = 1: 0.14285714285714285
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 23:
+n = 1: 0.09090909090909091
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 24:
+n = 1: 0.0
+n = 2: 0.0
+n = 3: 0.0
+
+Sentence 25:
+n = 1: 0.2
+n = 2: 0.0
+n = 3: 0.0
+
